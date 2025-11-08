@@ -2,40 +2,200 @@
 'use client';
 
 import Link from 'next/link';
+import Script from 'next/script';
 
 export default function AboutPage() {
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'Je služba skutečně zdarma?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Ano, Oznam to! je zcela zdarma a open source. Můžete vytvořit neomezený počet kanálů a přidávat neomezený počet oznámení bez jakýchkoliv poplatků.'
+        }
+      },
+      {
+        '@type': 'Question',
+        name: 'Jak rychle lze vytvořit novou oznámkovou desku?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Vytvoření nového kanálu trvá méně než minutu. Stačí se zaregistrovat, vybrat název a slug pro váš kanál a můžete začít přidávat oznámení okamžitě.'
+        }
+      },
+      {
+        '@type': 'Question',
+        name: 'Mohou lidé bez účtu číst oznámení?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Ano! Veřejná stránka vašeho kanálu (oznam-to.cyn.cz/váš-slug) je přístupná komukoli bez nutnosti registrace. Pouze pro vytváření a správu oznámení je potřeba účet.'
+        }
+      },
+      {
+        '@type': 'Question',
+        name: 'Je systém vhodný pro velká SVJ?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Určitě! Systém podporuje připínání důležitých oznámení, kategorizaci příspěvků a možnost přidat více administrátorů. Je škálovatelný pro SVJ jakékoli velikosti.'
+        }
+      },
+      {
+        '@type': 'Question',
+        name: 'Jsou data v bezpečí?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Ano, aplikace používá Supabase pro bezpečnou autentizaci a databázi, veškerý HTML obsah je sanitizován proti XSS útokům a používáme moderní bezpečnostní praktiky.'
+        }
+      },
+      {
+        '@type': 'Question',
+        name: 'Potřebuji technické znalosti k používání?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Ne! Rozhraní je navrženo tak, aby bylo intuitivní a jednoduché. Pokud umíte psát email, zvládnete i Oznam to! Rich text editor funguje jako běžný textový procesor.'
+        }
+      }
+    ]
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
-      <div className="max-w-4xl mx-auto px-4 py-12">
-        {/* Back Link */}
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-700 font-medium mb-8 transition-colors group"
-        >
-          <svg className="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-          Zpět na hlavní stránku
-        </Link>
+    <>
+      <Script
+        id="faq-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
+        <div className="max-w-4xl mx-auto px-4 py-12">
+          {/* Back Link */}
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-700 font-medium mb-8 transition-colors group"
+          >
+            <svg className="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            Zpět na hlavní stránku
+          </Link>
 
-        {/* Header */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow-sm mb-4">
-            <span className="text-2xl">ℹ️</span>
-            <span className="text-sm font-medium text-gray-600">
-              O projektu
-            </span>
+          {/* Header */}
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow-sm mb-4">
+              <span className="text-2xl">ℹ️</span>
+              <span className="text-sm font-medium text-gray-600">
+                O projektu
+              </span>
+            </div>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+              Často kladené dotazy
+            </h1>
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+              Vše, co potřebujete vědět o projektu Oznam to!
+            </p>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-            Často kladené dotazy
-          </h1>
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            Vše, co potřebujete vědět o projektu Oznam to!
-          </p>
-        </div>
 
-        {/* FAQ Section */}
-        <div className="space-y-4 mb-12">
+          {/* General FAQ Section */}
+          <div className="mb-12">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Obecné otázky</h2>
+            <div className="space-y-4">
+              {/* Je služba skutečně zdarma? */}
+              <details className="group bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                <summary className="flex justify-between items-center p-6 font-semibold text-gray-900 cursor-pointer hover:bg-gray-50 transition-colors">
+                  <span className="text-lg">Je služba skutečně zdarma?</span>
+                  <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </summary>
+                <div className="px-6 pb-6 text-gray-700 border-t border-gray-100 pt-4">
+                  <p>
+                    Ano, Oznam to! je zcela zdarma a open source. Můžete vytvořit neomezený počet kanálů a přidávat neomezený počet oznámení bez jakýchkoliv poplatků.
+                  </p>
+                </div>
+              </details>
+
+              {/* Jak rychle lze vytvořit novou oznámkovou desku? */}
+              <details className="group bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                <summary className="flex justify-between items-center p-6 font-semibold text-gray-900 cursor-pointer hover:bg-gray-50 transition-colors">
+                  <span className="text-lg">Jak rychle lze vytvořit novou oznámkovou desku?</span>
+                  <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </summary>
+                <div className="px-6 pb-6 text-gray-700 border-t border-gray-100 pt-4">
+                  <p>
+                    Vytvoření nového kanálu trvá méně než minutu. Stačí se zaregistrovat, vybrat název a slug pro váš kanál a můžete začít přidávat oznámení okamžitě.
+                  </p>
+                </div>
+              </details>
+
+              {/* Mohou lidé bez účtu číst oznámení? */}
+              <details className="group bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                <summary className="flex justify-between items-center p-6 font-semibold text-gray-900 cursor-pointer hover:bg-gray-50 transition-colors">
+                  <span className="text-lg">Mohou lidé bez účtu číst oznámení?</span>
+                  <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </summary>
+                <div className="px-6 pb-6 text-gray-700 border-t border-gray-100 pt-4">
+                  <p>
+                    Ano! Veřejná stránka vašeho kanálu (oznam-to.cyn.cz/váš-slug) je přístupná komukoli bez nutnosti registrace. Pouze pro vytváření a správu oznámení je potřeba účet.
+                  </p>
+                </div>
+              </details>
+
+              {/* Je systém vhodný pro velká SVJ? */}
+              <details className="group bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                <summary className="flex justify-between items-center p-6 font-semibold text-gray-900 cursor-pointer hover:bg-gray-50 transition-colors">
+                  <span className="text-lg">Je systém vhodný pro velká SVJ?</span>
+                  <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </summary>
+                <div className="px-6 pb-6 text-gray-700 border-t border-gray-100 pt-4">
+                  <p>
+                    Určitě! Systém podporuje připínání důležitých oznámení, kategorizaci příspěvků a možnost přidat více administrátorů. Je škálovatelný pro SVJ jakékoli velikosti.
+                  </p>
+                </div>
+              </details>
+
+              {/* Jsou data v bezpečí? */}
+              <details className="group bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                <summary className="flex justify-between items-center p-6 font-semibold text-gray-900 cursor-pointer hover:bg-gray-50 transition-colors">
+                  <span className="text-lg">Jsou data v bezpečí?</span>
+                  <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </summary>
+                <div className="px-6 pb-6 text-gray-700 border-t border-gray-100 pt-4">
+                  <p>
+                    Ano, aplikace používá Supabase pro bezpečnou autentizaci a databázi, veškerý HTML obsah je sanitizován proti XSS útokům a používáme moderní bezpečnostní praktiky.
+                  </p>
+                </div>
+              </details>
+
+              {/* Potřebuji technické znalosti k používání? */}
+              <details className="group bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                <summary className="flex justify-between items-center p-6 font-semibold text-gray-900 cursor-pointer hover:bg-gray-50 transition-colors">
+                  <span className="text-lg">Potřebuji technické znalosti k používání?</span>
+                  <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </summary>
+                <div className="px-6 pb-6 text-gray-700 border-t border-gray-100 pt-4">
+                  <p>
+                    Ne! Rozhraní je navrženo tak, aby bylo intuitivní a jednoduché. Pokud umíte psát email, zvládnete i Oznam to! Rich text editor funguje jako běžný textový procesor.
+                  </p>
+                </div>
+              </details>
+            </div>
+          </div>
+
+          {/* About Project FAQ Section */}
+          <div className="mb-12">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">O projektu</h2>
+            <div className="space-y-4">
           {/* Proč tento projekt vznikl? */}
           <details className="group bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
             <summary className="flex justify-between items-center p-6 font-semibold text-gray-900 cursor-pointer hover:bg-gray-50 transition-colors">
@@ -176,7 +336,7 @@ export default function AboutPage() {
             </summary>
             <div className="px-6 pb-6 text-gray-700 space-y-3 border-t border-gray-100 pt-4">
               <p>
-                Ano! Oznam to! je plně open source projekt. Zdrojový kód je dostupný pro každého,
+                Ano! Oznam to! je plně open source projekt. <a href="https://github.com/VlastikYoutubeKo/oznam-to.cz" className="text-indigo-600">Zdrojový kód</a> je dostupný pro každého,
                 kdo se chce podívat, jak funguje, nebo přispět vlastními vylepšeními.
               </p>
               <p>
@@ -229,7 +389,8 @@ export default function AboutPage() {
               </div>
             </div>
           </details>
-        </div>
+            </div>
+          </div>
 
         {/* Credits Section */}
         <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-2xl p-8 shadow-xl mb-8">
@@ -256,5 +417,6 @@ export default function AboutPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }

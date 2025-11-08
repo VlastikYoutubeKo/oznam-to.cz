@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import type { User } from '@supabase/supabase-js';
-import Script from 'next/script';
 
 export default function HomePage() {
   const [user, setUser] = useState<User | null>(null);
@@ -18,69 +17,8 @@ export default function HomePage() {
     fetchSession();
   }, []);
 
-  const faqSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: [
-      {
-        '@type': 'Question',
-        name: 'Je služba skutečně zdarma?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Ano, Oznam to! je zcela zdarma a open source. Můžete vytvořit neomezený počet kanálů a přidávat neomezený počet oznámení bez jakýchkoliv poplatků.'
-        }
-      },
-      {
-        '@type': 'Question',
-        name: 'Jak rychle lze vytvořit novou oznámkovou desku?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Vytvoření nového kanálu trvá méně než minutu. Stačí se zaregistrovat, vybrat název a slug pro váš kanál a můžete začít přidávat oznámení okamžitě.'
-        }
-      },
-      {
-        '@type': 'Question',
-        name: 'Mohou lidé bez účtu číst oznámení?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Ano! Veřejná stránka vašeho kanálu (oznam-to.cyn.cz/váš-slug) je přístupná komukoli bez nutnosti registrace. Pouze pro vytváření a správu oznámení je potřeba účet.'
-        }
-      },
-      {
-        '@type': 'Question',
-        name: 'Je systém vhodný pro velká SVJ?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Určitě! Systém podporuje připínání důležitých oznámení, kategorizaci příspěvků a možnost přidat více administrátorů. Je škálovatelný pro SVJ jakékoli velikosti.'
-        }
-      },
-      {
-        '@type': 'Question',
-        name: 'Jsou data v bezpečí?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Ano, aplikace používá Supabase pro bezpečnou autentizaci a databázi, veškerý HTML obsah je sanitizován proti XSS útokům a používáme moderní bezpečnostní praktiky.'
-        }
-      },
-      {
-        '@type': 'Question',
-        name: 'Potřebuji technické znalosti k používání?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Ne! Rozhraní je navrženo tak, aby bylo intuitivní a jednoduché. Pokud umíte psát email, zvládnete i Oznam to! Rich text editor funguje jako běžný textový procesor.'
-        }
-      }
-    ]
-  };
-
   return (
-    <>
-      <Script
-        id="faq-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-      <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
       <div className="max-w-6xl mx-auto px-4 py-20">
         {/* Hero Section */}
         <div className="text-center mb-20">
@@ -266,74 +204,6 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* FAQ Section */}
-        <div className="mt-20 max-w-4xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">
-            Často kladené otázky
-          </h2>
-          <div className="space-y-6">
-            <details className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow group">
-              <summary className="font-bold text-lg cursor-pointer text-gray-900 list-none flex items-center justify-between">
-                Je služba skutečně zdarma?
-                <span className="text-indigo-600 group-open:rotate-180 transition-transform">▼</span>
-              </summary>
-              <p className="mt-4 text-gray-600 leading-relaxed">
-                Ano, Oznam to! je zcela zdarma a open source. Můžete vytvořit neomezený počet kanálů a přidávat neomezený počet oznámení bez jakýchkoliv poplatků.
-              </p>
-            </details>
-
-            <details className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow group">
-              <summary className="font-bold text-lg cursor-pointer text-gray-900 list-none flex items-center justify-between">
-                Jak rychle lze vytvořit novou oznámkovou desku?
-                <span className="text-indigo-600 group-open:rotate-180 transition-transform">▼</span>
-              </summary>
-              <p className="mt-4 text-gray-600 leading-relaxed">
-                Vytvoření nového kanálu trvá méně než minutu. Stačí se zaregistrovat, vybrat název a slug pro váš kanál a můžete začít přidávat oznámení okamžitě.
-              </p>
-            </details>
-
-            <details className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow group">
-              <summary className="font-bold text-lg cursor-pointer text-gray-900 list-none flex items-center justify-between">
-                Mohou lidé bez účtu číst oznámení?
-                <span className="text-indigo-600 group-open:rotate-180 transition-transform">▼</span>
-              </summary>
-              <p className="mt-4 text-gray-600 leading-relaxed">
-                Ano! Veřejná stránka vašeho kanálu (oznam-to.cyn.cz/váš-slug) je přístupná komukoli bez nutnosti registrace. Pouze pro vytváření a správu oznámení je potřeba účet.
-              </p>
-            </details>
-
-            <details className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow group">
-              <summary className="font-bold text-lg cursor-pointer text-gray-900 list-none flex items-center justify-between">
-                Je systém vhodný pro velká SVJ?
-                <span className="text-indigo-600 group-open:rotate-180 transition-transform">▼</span>
-              </summary>
-              <p className="mt-4 text-gray-600 leading-relaxed">
-                Určitě! Systém podporuje připínání důležitých oznámení, kategorizaci příspěvků a možnost přidat více administrátorů. Je škálovatelný pro SVJ jakékoli velikosti.
-              </p>
-            </details>
-
-            <details className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow group">
-              <summary className="font-bold text-lg cursor-pointer text-gray-900 list-none flex items-center justify-between">
-                Jsou data v bezpečí?
-                <span className="text-indigo-600 group-open:rotate-180 transition-transform">▼</span>
-              </summary>
-              <p className="mt-4 text-gray-600 leading-relaxed">
-                Ano, aplikace používá Supabase pro bezpečnou autentizaci a databázi, veškerý HTML obsah je sanitizován proti XSS útokům a používáme moderní bezpečnostní praktiky.
-              </p>
-            </details>
-
-            <details className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow group">
-              <summary className="font-bold text-lg cursor-pointer text-gray-900 list-none flex items-center justify-between">
-                Potřebuji technické znalosti k používání?
-                <span className="text-indigo-600 group-open:rotate-180 transition-transform">▼</span>
-              </summary>
-              <p className="mt-4 text-gray-600 leading-relaxed">
-                Ne! Rozhraní je navrženo tak, aby bylo intuitivní a jednoduché. Pokud umíte psát email, zvládnete i Oznam to! Rich text editor funguje jako běžný textový procesor.
-              </p>
-            </details>
-          </div>
-        </div>
-
         {/* Footer */}
         <footer className="mt-20 pt-8 border-t border-gray-200">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
@@ -358,6 +228,5 @@ export default function HomePage() {
         </footer>
       </div>
     </div>
-    </>
   );
 }
