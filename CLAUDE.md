@@ -34,13 +34,30 @@ npm run lint      # Run ESLint
 ## Architecture
 
 ### Routing Structure (Next.js App Router)
-- `/` - Landing page
-- `/login` - Authentication page
-- `/signup` - User registration
-- `/dashboard` - User's channel list + channel creation
-- `/dashboard/[slug]` - Admin view for managing a specific channel's posts
-- `/dashboard/[slug]/settings` - Channel settings (role management, etc.)
+
+**Public Pages:**
+- `/` - Landing page with features showcase and FAQ
+- `/jak-funguje` - How it works tutorial (5-step guide)
+- `/about` - About the project & extended FAQ with project background
+- `/privacy` - Privacy policy & GDPR compliance information
+- `/donate` - Support/donation page (Ko-fi, PayPal links)
 - `/[slug]` - **Public view** of a channel's announcements
+
+**Authentication:**
+- `/login` - User authentication page
+- `/signup` - User registration page
+- `/forgot-password` - Password reset request (sends email)
+- `/reset-password` - Password reset confirmation page
+
+**User Dashboard:**
+- `/dashboard` - User's channel list + channel creation
+- `/dashboard/settings` - User settings (redirects to subscriptions)
+- `/dashboard/subscriptions` - Centralized subscription management
+- `/dashboard/[slug]` - Admin view for managing a specific channel's posts
+- `/dashboard/[slug]/settings` - Channel settings (appearance, members, danger zone)
+
+**Admin Panel:**
+- `/admin` - System admin panel - view all channels with stats (restricted to `my@email.cz`)
 
 ### Database Schema (Supabase)
 The app uses four main tables:

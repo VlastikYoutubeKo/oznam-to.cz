@@ -327,10 +327,22 @@ oznam-to/
 │   ├── dashboard/
 │   │   ├── [slug]/                    # Channel admin pages
 │   │   │   └── settings/              # Channel customization
+│   │   ├── settings/                  # User settings (redirects to subscriptions)
 │   │   └── subscriptions/             # User subscription management
 │   ├── [slug]/                        # Public channel view
+│   ├── about/                         # About & FAQ page
+│   ├── admin/                         # Admin panel (restricted)
+│   ├── donate/                        # Donation/support page
+│   ├── privacy/                       # Privacy policy & GDPR
+│   ├── forgot-password/               # Password reset request
+│   ├── reset-password/                # Password reset confirmation
+│   ├── jak-funguje/                   # How it works tutorial
+│   ├── login/                         # Login page
+│   ├── signup/                        # User registration
 │   ├── layout.tsx                     # Root layout with metadata
-│   └── page.tsx                       # Landing page
+│   ├── page.tsx                       # Landing page
+│   ├── robots.ts                      # Robots.txt generator
+│   └── sitemap.ts                     # Sitemap generator
 ├── components/
 │   ├── Header.tsx                     # Navigation (with hamburger menu)
 │   ├── RichTextEditor.tsx             # TipTap editor
@@ -348,6 +360,31 @@ oznam-to/
 ├── CLAUDE.md                          # 🆕 Updated developer guide
 └── .env.local                         # Environment variables (gitignored)
 ```
+
+### 🗺️ Route Map
+
+**Public Pages:**
+- `/` - Landing page with features and FAQ
+- `/jak-funguje` - How it works tutorial
+- `/about` - About the project & extended FAQ
+- `/privacy` - Privacy policy & GDPR compliance
+- `/donate` - Support the project (Ko-fi, PayPal)
+- `/[slug]` - Public channel view (e.g., `/my-channel`)
+
+**Authentication:**
+- `/login` - User login
+- `/signup` - User registration
+- `/forgot-password` - Request password reset
+- `/reset-password` - Confirm password reset
+
+**User Dashboard:**
+- `/dashboard` - Channel list & creation
+- `/dashboard/subscriptions` - Manage email subscriptions
+- `/dashboard/[slug]` - Channel admin (create/edit/delete posts)
+- `/dashboard/[slug]/settings` - Channel customization
+
+**Admin Panel:**
+- `/admin` - View all channels (restricted to admin email)
 
 ---
 

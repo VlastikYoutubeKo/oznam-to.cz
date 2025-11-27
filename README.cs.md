@@ -333,10 +333,22 @@ oznam-to/
 │   ├── dashboard/
 │   │   ├── [slug]/                    # Administrační stránky kanálu
 │   │   │   └── settings/              # Přizpůsobení kanálu
+│   │   ├── settings/                  # Uživatelská nastavení (přesměruje na odběry)
 │   │   └── subscriptions/             # Správa odběrů uživatele
 │   ├── [slug]/                        # Veřejné zobrazení kanálu
+│   ├── about/                         # O projektu & FAQ
+│   ├── admin/                         # Administrátorský panel (omezený přístup)
+│   ├── donate/                        # Stránka s podporou projektu
+│   ├── privacy/                       # Zásady ochrany soukromí & GDPR
+│   ├── forgot-password/               # Žádost o obnovení hesla
+│   ├── reset-password/                # Potvrzení obnovení hesla
+│   ├── jak-funguje/                   # Návod jak to funguje
+│   ├── login/                         # Přihlašovací stránka
+│   ├── signup/                        # Registrace uživatele
 │   ├── layout.tsx                     # Hlavní layout s metadaty
-│   └── page.tsx                       # Úvodní stránka
+│   ├── page.tsx                       # Úvodní stránka
+│   ├── robots.ts                      # Generátor robots.txt
+│   └── sitemap.ts                     # Generátor sitemap
 ├── components/
 │   ├── Header.tsx                     # Navigace (s hamburger menu)
 │   ├── RichTextEditor.tsx             # TipTap editor
@@ -354,6 +366,31 @@ oznam-to/
 ├── CLAUDE.md                          # 🆕 Aktualizovaný průvodce pro vývojáře
 └── .env.local                         # Proměnné prostředí (v .gitignore)
 ```
+
+### 🗺️ Mapa stránek
+
+**Veřejné stránky:**
+- `/` - Úvodní stránka s funkcemi a FAQ
+- `/jak-funguje` - Návod jak to funguje
+- `/about` - O projektu & rozšířené FAQ
+- `/privacy` - Zásady ochrany soukromí & GDPR
+- `/donate` - Podpora projektu (Ko-fi, PayPal)
+- `/[slug]` - Veřejné zobrazení kanálu (např. `/muj-kanal`)
+
+**Autentizace:**
+- `/login` - Přihlášení uživatele
+- `/signup` - Registrace uživatele
+- `/forgot-password` - Žádost o obnovení hesla
+- `/reset-password` - Potvrzení obnovení hesla
+
+**Uživatelský dashboard:**
+- `/dashboard` - Seznam kanálů & vytvoření kanálu
+- `/dashboard/subscriptions` - Správa e-mailových odběrů
+- `/dashboard/[slug]` - Správa kanálu (vytváření/úprava/mazání příspěvků)
+- `/dashboard/[slug]/settings` - Přizpůsobení kanálu
+
+**Administrátorský panel:**
+- `/admin` - Zobrazení všech kanálů (omezený přístup na admin email)
 
 ---
 
