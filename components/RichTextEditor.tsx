@@ -5,7 +5,7 @@ import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Link from '@tiptap/extension-link';
 import Underline from '@tiptap/extension-underline';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 interface RichTextEditorProps {
   value: string;
@@ -14,6 +14,9 @@ interface RichTextEditorProps {
 }
 
 export default function RichTextEditor({ value, onChange, placeholder }: RichTextEditorProps) {
+  const [isRawMode, setIsRawMode] = useState(false);
+  const [rawHTML, setRawHTML] = useState(value);
+
   const editor = useEditor({
     immediatelyRender: false, // Fix pro Next.js SSR
     extensions: [
@@ -33,7 +36,9 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
     ],
     content: value,
     onUpdate: ({ editor }) => {
-      onChange(editor.getHTML());
+      const html = editor.getHTML();
+      setRawHTML(html);
+      onChange(html);
     },
     editorProps: {
       attributes: {
@@ -46,8 +51,33 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
   useEffect(() => {
     if (editor && value !== editor.getHTML()) {
       editor.commands.setContent(value);
+      setRawHTML(value);
     }
   }, [value, editor]);
+
+  // Přepnutí do raw módu
+  const toggleRawMode = () => {
+    if (!isRawMode) {
+      // Přepínáme do raw módu - uložíme aktuální HTML
+      if (editor) {
+        setRawHTML(editor.getHTML());
+      }
+    } else {
+      // Přepínáme zpět do WYSIWYG - nastavíme HTML do editoru
+      if (editor) {
+        editor.commands.setContent(rawHTML);
+        onChange(rawHTML);
+      }
+    }
+    setIsRawMode(!isRawMode);
+  };
+
+  // Handler pro změnu raw HTML
+  const handleRawHTMLChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newHTML = e.target.value;
+    setRawHTML(newHTML);
+    onChange(newHTML);
+  };
 
   if (!editor) {
     return <div className="h-[200px] bg-gray-100 animate-pulse rounded-md" />;
@@ -57,13 +87,27 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
     <div className="border border-gray-300 rounded-lg bg-white overflow-hidden">
       {/* Toolbar */}
       <div className="border-b border-gray-200 bg-gray-50 p-2 flex flex-wrap gap-1">
+        {/* Toggle Raw/WYSIWYG */}
         <ToolbarButton
-          onClick={() => editor.chain().focus().toggleBold().run()}
-          isActive={editor.isActive('bold')}
-          title="Tučné (Ctrl+B)"
+          onClick={toggleRawMode}
+          isActive={isRawMode}
+          title={isRawMode ? 'Přepnout na WYSIWYG' : 'Přepnout na HTML'}
         >
-          <strong>B</strong>
+          {isRawMode ? '📝 WYSIWYG' : '</> HTML'}
         </ToolbarButton>
+
+        <div className="w-px h-6 bg-gray-300 mx-1" />
+
+        {/* Formatting buttons - only visible in WYSIWYG mode */}
+        {!isRawMode && (
+          <>
+            <ToolbarButton
+              onClick={() => editor.chain().focus().toggleBold().run()}
+              isActive={editor.isActive('bold')}
+              title="Tučné (Ctrl+B)"
+            >
+              <strong>B</strong>
+            </ToolbarButton>
         
         <ToolbarButton
           onClick={() => editor.chain().focus().toggleItalic().run()}
@@ -174,15 +218,29 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
             🔗✕
           </ToolbarButton>
         )}
+          </>
+        )}
       </div>
 
-      {/* Editor */}
-      <EditorContent editor={editor} />
-      
-      {!editor.getText() && (
-        <div className="absolute top-14 left-4 text-gray-400 pointer-events-none">
-          {placeholder || 'Začněte psát...'}
-        </div>
+      {/* Editor - WYSIWYG or Raw HTML */}
+      {isRawMode ? (
+        <textarea
+          value={rawHTML}
+          onChange={handleRawHTMLChange}
+          className="w-full min-h-[200px] p-4 font-mono text-sm focus:outline-none resize-y"
+          placeholder={placeholder || 'Vložte HTML kód...'}
+          spellCheck={false}
+        />
+      ) : (
+        <>
+          <EditorContent editor={editor} />
+
+          {!editor.getText() && (
+            <div className="absolute top-14 left-4 text-gray-400 pointer-events-none">
+              {placeholder || 'Začněte psát...'}
+            </div>
+          )}
+        </>
       )}
     </div>
   );
